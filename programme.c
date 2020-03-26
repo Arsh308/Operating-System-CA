@@ -22,9 +22,9 @@ void findWaitingTime(Process proc[], int m,int wt[])
     while (complete != m) { 
   
         // Find process with minimum 
-        // remaining time among the 
+        // remainingg time among the 
         // processes that arrives till the 
-        // current time` 
+        // current time
         for ( j = 0; j < m; j++) { 
             if ((proc[j].arrivalTime <= t) && 
             (rt[j] < minm) && rt[j] > 0) { 
