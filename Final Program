@@ -1,0 +1,25 @@
+#include<stdlib.h>  //memory allocation,
+#include<unistd.h>  //function declarations
+#include<stdio.h> //Standard Input Output
+struct mlQue
+{              
+ int burst_time;
+ int proc_id;
+  int arrival_time;
+	
+};
+
+float CalTotalburst_time(struct mlQue* Que,int n)
+{
+	float burst_time=0;//to calculate total burst time
+	for(int i=0;i<n;i++)
+	{
+		burst_time+=(Que+i)->burst_time;
+	}
+	return burst_time;
+}
+
+float func_proc(struct mlQue* q, int size,struct mlQue* Que);
+void minarrival_time(struct mlQue* que,int size);
+void minburst_time(struct mlQue* que,int size);
+int Finish_proc(struct mlQue* Que,int size);
