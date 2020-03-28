@@ -23,3 +23,79 @@ float func_proc(struct mlQue* q, int size,struct mlQue* Que);
 void minarrival_time(struct mlQue* que,int size);
 void minburst_time(struct mlQue* que,int size);
 int Finish_proc(struct mlQue* Que,int size);
+int main()
+{
+	int i,n1,n2;
+	float TotalTurnAroundTime,AvgTurnAroundTime,AvgWaitingTime,Totalburst_time;
+	printf("\n Multilevel Queue On Preemptive Shortest Job Remaining First \n");
+	printf("\nNo of Processes in Queue1: ");
+	scanf("%d",&n1);
+	struct mlQue *q1=(struct mlQue*)malloc(n1*sizeof(struct mlQue));
+	struct mlQue *Que1=(struct mlQue*)malloc(n1*sizeof(struct mlQue));
+	printf("\n Details for Processes in Queue1:\n");
+
+	for(i=0;i<n1;i++)
+	{
+		printf("For Process %d:\n",i+1);
+		(q1+i)->proc_id=i+1;
+		(Que1+i)->proc_id=i+1;
+		printf("proc_id: %d\n", (q1+i)->proc_id);
+		printf("Arrival Time: ");
+		scanf("%d",&(q1+i)->arrival_time);
+		(Que1+i)->arrival_time=(q1+i)->arrival_time;
+		printf("Burst Time: ");
+		scanf("%d",&(q1+i)->burst_time);
+		(Que1+i)->burst_time=(q1+i)->burst_time;
+		printf("\n");
+	}
+	
+	printf("Number of Processes in Queue2: ");
+	scanf("%d",&n2);
+	struct mlQue *q2=(struct mlQue*)malloc(n1*sizeof(struct mlQue));
+	struct mlQue *Que2=(struct mlQue*)malloc(n1*sizeof(struct mlQue));
+	printf("\nDetails for Processes in Queue2:\n");
+	for(i=0;i<n2;i++)
+	{
+		printf("For Process %d:\n",i+1);
+		(q2+i)->proc_id=i+1;
+		(Que2+i)->proc_id=i+1;
+		printf("proc_id: %d\n", (q2+i)->proc_id);
+		
+		printf("Arrival Time: ");
+		scanf("%d",&(q2+i)->arrival_time);
+		(Que2+i)->arrival_time=(q2+i)->arrival_time;
+		printf("Burst Time: ");
+		scanf("%d",&(q2+i)->burst_time);
+		(Que2+i)->burst_time=(q2+i)->burst_time;
+		printf("\n");
+	}
+	printf("\n");
+
+	printf("\nDetails Of Processes in Queue1\n");
+	printf("\n Process: | Arrival Time:  | Burst Time:");
+	for(i=0;i<n1;i++)
+    {
+        printf("\n P%d          %d               %d      ",(q1+i)->proc_id,(q1+i)->arrival_time,(q1+i)->burst_time);
+    }
+    printf("\n");
+
+    printf("\nDetails Of Processes in Queue2\n");
+	printf("\n Process: | Arival Time: | Burst Time: ");
+	for(i=0;i<n2;i++)
+    {
+        printf("\n P%d         %d              %d  ",(q2+i)->proc_id,(q2+i)->arrival_time,(q2+i)->burst_time);
+    }
+    printf("\n\n");
+    
+    TotalTurnAroundTime=func_proc(q1,n1,Que1);
+    AvgTurnAroundTime=TotalTurnAroundTime/n1;
+    Totalburst_time=CalTotalburst_time(q1,n1);
+    AvgWaitingTime=(TotalTurnAroundTime-Totalburst_time)/n1;
+
+    printf("\n");
+    printf("\nAverage TurnAroundTime: %.2f\n", AvgTurnAroundTime);
+    printf("\nAverage WaitingTime: %.2f\n",AvgWaitingTime);
+
+    printf("\n\n");
+	return 0;
+}
