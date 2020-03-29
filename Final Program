@@ -99,3 +99,64 @@ int main()
     printf("\n\n");
 	return 0;
 }
+float func_proc(struct mlQue* q, int size,struct mlQue* Que)
+{
+	int count=0,flag=0;
+	float tAt=0,Wt=0;
+	while(!Finish_proc(Que,size))
+	{
+		if(flag==0)
+		{
+			minarrival_time(Que,size);
+			count+=Que->arrival_time;
+			flag++;
+		}
+		else
+		{
+			minburst_time(Que,size);
+		}
+		int check=0;
+		for(int i=0;i<size;i++)
+		{
+			if((Que+i)->burst_time!=0 && count>=(Que+i)->arrival_time)
+			{
+				check=1;
+				break;
+			}
+					
+		}
+		if(check==0)
+		{
+			minarrival_time(Que,size);
+			for(int i=0;i<size;i++)
+			{
+				if((Que+i)->burst_time!=0)
+				{
+					int x=count;
+					count+=((Que+i)->arrival_time)-x;
+					break;
+				}
+			}
+		}
+		for(int i=0;i<size;i++)
+		{
+			if((Que+i)->burst_time!=0 && count>=(Que+i)->arrival_time)
+			{
+				if((Que+i)->burst_time>2)
+				{
+					(Que+i)->burst_time=(Que+i)->burst_time-2;
+					count+=2;
+				}
+				else
+				{
+					count+=(Que+i)->burst_time;
+					(Que+i)->burst_time=0;
+					int x=count;
+					tAt+=x-((Que+i)->arrival_time);
+				}
+				break;				
+			}
+		}
+	}
+	return tAt;
+}
