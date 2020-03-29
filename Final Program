@@ -160,3 +160,89 @@ float func_proc(struct mlQue* q, int size,struct mlQue* Que)
 	}
 	return tAt;
 }
+void minarrival_time(struct mlQue* que,int size)
+{
+	int i,j;
+	for(i=1;i<=size-1;i++)
+	{
+		for(j=0;j<size-1;j++)
+		{
+			if(((que+j)->arrival_time)>((que+j+1)->arrival_time))
+			{
+				//to swap arrival time in dec
+				int temp=(que+j)->arrival_time;
+				(que+j)->arrival_time=(que+j+1)->arrival_time;
+				(que+j+1)->arrival_time=temp;
+
+				//to swap Burst Time in dec Order
+				temp=(que+j)->burst_time;
+				(que+j)->burst_time=(que+j+1)->burst_time;
+				(que+j+1)->burst_time=temp;
+
+				//to swap proc_id 
+				temp=(que+j)->proc_id;
+				(que+j)->proc_id=(que+j+1)->proc_id;
+				(que+j+1)->proc_id=temp;
+			}
+			else if(((que+j)->arrival_time)==((que+j+1)->arrival_time))
+			{
+				if(((que+j)->burst_time)>((que+j+1)->burst_time))
+				{
+					//to swap Burst Time in dec Order
+					int temp=(que+j)->burst_time;
+					(que+j)->burst_time=(que+j+1)->burst_time;
+					(que+j+1)->burst_time=temp;
+
+					//to swap proc_id 
+					temp=(que+j)->proc_id;
+					(que+j)->proc_id=(que+j+1)->proc_id;
+					(que+j+1)->proc_id=temp;
+
+					//to swap Arrival time in dec Order
+					temp=(que+j)->arrival_time;
+					(que+j)->arrival_time=(que+j+1)->arrival_time;
+					(que+j+1)->arrival_time=temp;
+				}
+			}
+		}
+	}
+}
+
+void minburst_time(struct mlQue* que,int size)
+{
+	int i,j;
+	for(i=1;i<=size-1;i++)
+	{
+		for(j=0;j<size-1;j++)
+		{
+			if(((que+j)->burst_time)>((que+j+1)->burst_time))
+			{
+				int temp=(que+j)->burst_time;////swap Burst Time in decreasing Order
+				(que+j)->burst_time=(que+j+1)->burst_time;
+				(que+j+1)->burst_time=temp;
+
+				temp=(que+j)->proc_id;//swap proc_id 
+				(que+j)->proc_id=(que+j+1)->proc_id;
+				(que+j+1)->proc_id=temp;
+
+				temp=(que+j)->arrival_time;////swap Arrival time in decreasing Order
+				(que+j)->arrival_time=(que+j+1)->arrival_time;
+				(que+j+1)->arrival_time=temp;	
+			}
+		}
+	}
+}
+int Finish_proc(struct mlQue* Que,int size)
+{
+	int flag=1;////to check is there any processes left yet to be processed
+	for(int i=0;i<size;i++)
+	{
+		if((Que+i)->burst_time!=0)
+		{
+			flag=0;
+			return flag;
+		}	
+	}
+	return flag;
+}
+
